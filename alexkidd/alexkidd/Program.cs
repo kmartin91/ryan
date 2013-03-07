@@ -10,7 +10,7 @@ namespace alexkidd
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            using (GameFunc game = new GameFunc())
             {
                 game.Run();
             }

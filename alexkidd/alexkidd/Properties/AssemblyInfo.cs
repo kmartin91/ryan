@@ -1,15 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("alexkidd")]
+[assembly: AssemblyTitle("Alex Kidd in Miracle World Unlimited")]
 [assembly: AssemblyProduct("alexkidd")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("HP")]
-[assembly: AssemblyCopyright("Copyright © HP 2013")]
+[assembly: AssemblyCompany("Sega & K.Martin & J.Alves")]
+[assembly: AssemblyCopyright("Copyright © SEGA & K.Martin & J.Alves 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,3 +33,5 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersionAttribute("0.0.0.1")]
+[assembly: NeutralResourcesLanguageAttribute("fr")]

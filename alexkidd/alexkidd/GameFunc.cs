@@ -14,15 +14,25 @@ namespace alexkidd
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class GameFunc : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        private Texture2D _alex;
+        private Vector2 _alexBasePos;
+        private Vector2 _alexNewPos;
+        private float _rotation;
+
+        public GameFunc()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            _rotation = 0f;
+            // Allow resizing
+            this.Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
         }
 
         /// <summary>
@@ -34,7 +44,12 @@ namespace alexkidd
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Window_ClientSizeChanged(null, null);
+           // _alexBasePos = Vector2.One;
+            _alexBasePos = new Vector2(50, 50);
+            _alexNewPos = Vector2.One;
+            //alex = new Alexkidd();
+           
             base.Initialize();
         }
 
@@ -48,6 +63,9 @@ namespace alexkidd
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            _alex = Content.Load<Texture2D>("alex-kidd");
+            
         }
 
         /// <summary>
@@ -57,6 +75,7 @@ namespace alexkidd
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            this._alex.Dispose();
         }
 
         /// <summary>
@@ -67,12 +86,32 @@ namespace alexkidd
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+           /* if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();*/
 
             // TODO: Add your update logic here
+            //Code for Keyboard
+            KeyboardState kbState = Keyboard.GetState();
+            if (kbState.IsKeyDown(Keys.Right))
+                _alexBasePos.X += 1;
+            if (kbState.IsKeyDown(Keys.Left))
+                _alexBasePos.X -= 1;
 
+            //Code for xbox 360 gamepad
+            GamePadState gamepadState = GamePad.GetState(PlayerIndex.One);
+            GamePadCapabilities gamepadCaps = GamePad.GetCapabilities(PlayerIndex.One);
+            if (gamepadState.IsConnected)
+            {
+                if (gamepadCaps.HasLeftXThumbStick)
+                {
+
+                }
+            }
             base.Update(gameTime);
+        }
+
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
         }
 
         /// <summary>
@@ -83,6 +122,9 @@ namespace alexkidd
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+           /* spriteBatch.Begin();
+            spriteBatch.Draw(_alex, _alexBasePos,null, Color.White, MathHelper.ToRadians(_rotation), new Vector2(_alex.Width / 2, _alex.Height / 2), 0.07f, SpriteEffects.None, 0);
+            spriteBatch.End();*/
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
