@@ -33,8 +33,8 @@ namespace alexkidd
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             // Allow resizing
-            this.Window.AllowUserResizing = true;
-            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+            /*this.Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);*/
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace alexkidd
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Window_ClientSizeChanged(null, null);
+            //Window_ClientSizeChanged(null, null);
 
             mBackgroundOne = new Sprite();
             mBackgroundOne.Scale = 0.4f;
@@ -118,29 +118,26 @@ namespace alexkidd
            
 
             Vector2 aDirection = new Vector2(-1, 0);
+            Vector2 bDirection = new Vector2(1, 0);
             Vector2 aSpeed = new Vector2(60, 0);
 
             KeyboardState aCurrentKeyboardState = Keyboard.GetState();
             MouseState aCurrentMouseState = Mouse.GetState();
-            if (aCurrentKeyboardState.IsKeyDown(Keys.Right) == true)
+            alex.Update(aCurrentMouseState, aCurrentKeyboardState, gameTime);
+            if (aCurrentKeyboardState.IsKeyDown(Keys.Right) == true && aCurrentKeyboardState.IsKeyDown(Keys.Left) == false)
             {
-                
-               // alex.Size = new Rectangle(30, 0, 30, 30);
-                alex.Update(aCurrentMouseState, aCurrentKeyboardState,gameTime);
-
 
                 mBackgroundOne.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 mBackgroundTwo.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                
             }
 
 
             base.Update(gameTime);
         }
 
-        void Window_ClientSizeChanged(object sender, EventArgs e)
+       /* void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-        }
+        }*/
 
         /// <summary>
         /// This is called when the game should draw itself.

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alexkidd", "alexkidd\alexkidd\alexkidd.csproj", "{48FF9749-D4B1-43D8-B29E-C0D5A131EDB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ryan", "alexkidd\alexkidd\Ryan.csproj", "{48FF9749-D4B1-43D8-B29E-C0D5A131EDB8}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "alexkiddContent", "alexkidd\alexkiddContent\alexkiddContent.contentproj", "{18C7879C-9821-474A-B481-4EF0169F64A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RyanContent", "alexkidd\alexkiddContent\RyanContent.contentproj", "{18C7879C-9821-474A-B481-4EF0169F64A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
