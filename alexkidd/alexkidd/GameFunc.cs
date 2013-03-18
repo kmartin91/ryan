@@ -46,7 +46,7 @@ namespace alexkidd
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            //Window_ClientSizeChanged(null, null);
+            // Window_ClientSizeChanged(null, null);
 
             mBackgroundOne = new Sprite();
             mBackgroundOne.Scale = 0.4f;
