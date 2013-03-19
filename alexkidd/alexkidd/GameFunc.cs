@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace alexkidd
+namespace ryan
 {
     /// <summary>
     /// This is the main type for your game
@@ -20,11 +20,13 @@ namespace alexkidd
         SpriteBatch spriteBatch;
         
 
-        Sprite mBackgroundOne;
-        Sprite mBackgroundTwo;
+        Map mBackgroundOne;
+        Map mBackgroundTwo;
+        Map mBackgroundThree;
+
+        Ryan ryan;
+
        
-        Sprite alex;
-        RenderTarget2D backgroundRender;
 
        // private Texture2D _alex;
        
@@ -48,13 +50,15 @@ namespace alexkidd
             // TODO: Add your initialization logic here
             // Window_ClientSizeChanged(null, null);
 
-            mBackgroundOne = new Sprite();
+            mBackgroundOne = new Map();
             mBackgroundOne.Scale = 0.4f;
-            mBackgroundTwo = new Sprite();
+            mBackgroundTwo = new Map();
             mBackgroundTwo.Scale = 0.4f;
-           
+            mBackgroundThree = new Map();
+            mBackgroundThree.Scale = 0.4f;
 
-            alex = new Sprite();
+            ryan = new Ryan(1.0f);
+
            // alex.Scale = 0.03f;
 
             base.Initialize();
@@ -72,8 +76,8 @@ namespace alexkidd
             // TODO: use this.Content to load your game content here
 
            // _alex = Content.Load<Texture2D>("alex-kidd");
-            alex.LoadContent(this.Content, "sprite");
-            alex.Position = new Vector2(10, 396);
+            ryan.LoadContent(this.Content, "sprite");
+            //ryan.Position = new Vector2(10, 370);
 
             //backgroundRender = new RenderTarget2D(graphics.GraphicsDevice, alex.Size.Width +100,alex.Size.Width + 100, 1, SurfaceFormat.Color);
 
@@ -82,6 +86,9 @@ namespace alexkidd
 
             mBackgroundTwo.LoadContent(this.Content, "world");
             mBackgroundTwo.Position = new Vector2(mBackgroundOne.Position.X + mBackgroundOne.Size.Width, 0);
+
+            mBackgroundThree.LoadContent(this.Content, "world");
+            mBackgroundThree.Position = new Vector2(mBackgroundTwo.Position.X + mBackgroundTwo.Size.Width, 0);
             
         }
 
@@ -108,27 +115,47 @@ namespace alexkidd
 
             // TODO: Add your update logic here
             //Code for Keyboard
+           KeyboardState aCurrentKeyboardState = Keyboard.GetState();
+           MouseState aCurrentMouseState = Mouse.GetState();
+           ryan.Update(aCurrentMouseState, aCurrentKeyboardState, gameTime);
+          
 
 
-
-            if (mBackgroundOne.Position.X < -mBackgroundOne.Size.Width)
-                mBackgroundOne.Position.X = mBackgroundTwo.Position.X + mBackgroundTwo.Size.Width;
-            if (mBackgroundTwo.Position.X < -mBackgroundTwo.Size.Width)
-                mBackgroundTwo.Position.X = mBackgroundOne.Position.X + mBackgroundOne.Size.Width;
            
-
+            
             Vector2 aDirection = new Vector2(-1, 0);
-            Vector2 bDirection = new Vector2(1, 0);
+            
             Vector2 aSpeed = new Vector2(60, 0);
 
-            KeyboardState aCurrentKeyboardState = Keyboard.GetState();
-            MouseState aCurrentMouseState = Mouse.GetState();
-            alex.Update(aCurrentMouseState, aCurrentKeyboardState, gameTime);
+            
             if (aCurrentKeyboardState.IsKeyDown(Keys.Right) == true && aCurrentKeyboardState.IsKeyDown(Keys.Left) == false)
             {
-
+                if (mBackgroundOne.Position.X < -mBackgroundOne.Size.Width)
+                    mBackgroundOne.Position.X = mBackgroundThree.Position.X + mBackgroundThree.Size.Width;
+                if (mBackgroundTwo.Position.X < -mBackgroundTwo.Size.Width)
+                    mBackgroundTwo.Position.X = mBackgroundOne.Position.X + mBackgroundOne.Size.Width;
+                if (mBackgroundThree.Position.X < -mBackgroundThree.Size.Width)
+                    mBackgroundThree.Position.X = mBackgroundTwo.Position.X + mBackgroundTwo.Size.Width;
                 mBackgroundOne.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 mBackgroundTwo.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                mBackgroundThree.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (aCurrentKeyboardState.IsKeyDown(Keys.Left) == true && aCurrentKeyboardState.IsKeyDown(Keys.Right) == false)
+            {
+                if (mBackgroundOne.Position.X < 0)
+                {
+                    if (mBackgroundOne.Position.X < -mBackgroundOne.Size.Width)
+                        mBackgroundOne.Position.X = mBackgroundTwo.Position.X - mBackgroundTwo.Size.Width;
+                    if (mBackgroundTwo.Position.X < -mBackgroundTwo.Size.Width)
+                        mBackgroundTwo.Position.X = mBackgroundThree.Position.X - mBackgroundThree.Size.Width;
+
+                    if (mBackgroundThree.Position.X < -mBackgroundThree.Size.Width)
+                        mBackgroundThree.Position.X = mBackgroundOne.Position.X - mBackgroundOne.Size.Width;
+
+                    mBackgroundOne.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    mBackgroundTwo.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    mBackgroundThree.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
             }
 
 
@@ -152,8 +179,8 @@ namespace alexkidd
 
             mBackgroundOne.Draw(this.spriteBatch);
             mBackgroundTwo.Draw(this.spriteBatch);
-            alex.DrawPerso(this.spriteBatch);
-            //alex.Draw(this.spriteBatch,new Rectangle(0,0, 30,30));
+            mBackgroundThree.Draw(this.spriteBatch);
+            ryan.Draw(this.spriteBatch);
             spriteBatch.End();
 
  
