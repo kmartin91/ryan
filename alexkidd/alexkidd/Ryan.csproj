@@ -77,6 +77,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="GameFunc.cs" />
     <Compile Include="Ryan.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="SpriteObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

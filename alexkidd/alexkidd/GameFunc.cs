@@ -18,18 +18,20 @@ namespace ryan
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
 
-        Map mBackgroundOne;
+
         Map mBackgroundTwo;
         Map mBackgroundThree;
+        Map mBackgroundOne;
+
+        SpriteObject objet1, objet2, objet3;
 
         Ryan ryan;
 
-       
 
-       // private Texture2D _alex;
-       
+
+        // private Texture2D _alex;
+
         public GameFunc()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,16 +52,19 @@ namespace ryan
             // TODO: Add your initialization logic here
             // Window_ClientSizeChanged(null, null);
 
-            mBackgroundOne = new Map();
-            mBackgroundOne.Scale = 0.4f;
-            mBackgroundTwo = new Map();
+          /*  mBackgroundTwo = new Map();
             mBackgroundTwo.Scale = 0.4f;
             mBackgroundThree = new Map();
             mBackgroundThree.Scale = 0.4f;
+            mBackgroundOne = new Map();
+            mBackgroundOne.Scale = 0.4f;*/
 
             ryan = new Ryan(1.0f);
 
-           // alex.Scale = 0.03f;
+            objet1 = new SpriteObject("Objet1", 1.0f);
+            objet2 = new SpriteObject("Objet2", 1.0f);
+            objet3 = new SpriteObject("Objet3", 1.0f);
+            // alex.Scale = 0.03f;
 
             base.Initialize();
         }
@@ -75,21 +80,24 @@ namespace ryan
 
             // TODO: use this.Content to load your game content here
 
-           // _alex = Content.Load<Texture2D>("alex-kidd");
+            // _alex = Content.Load<Texture2D>("alex-kidd");
             ryan.LoadContent(this.Content, "sprite");
             //ryan.Position = new Vector2(10, 370);
 
             //backgroundRender = new RenderTarget2D(graphics.GraphicsDevice, alex.Size.Width +100,alex.Size.Width + 100, 1, SurfaceFormat.Color);
 
-            mBackgroundOne.LoadContent(this.Content, "world");
-            mBackgroundOne.Position = new Vector2(0, 0);
-
-            mBackgroundTwo.LoadContent(this.Content, "world");
-            mBackgroundTwo.Position = new Vector2(mBackgroundOne.Position.X + mBackgroundOne.Size.Width, 0);
+          /*  mBackgroundTwo.LoadContent(this.Content, "world");
+            mBackgroundTwo.Position = new Vector2(0, 0);
 
             mBackgroundThree.LoadContent(this.Content, "world");
             mBackgroundThree.Position = new Vector2(mBackgroundTwo.Position.X + mBackgroundTwo.Size.Width, 0);
-            
+
+            mBackgroundOne.LoadContent(this.Content, "world");
+            mBackgroundOne.Position = new Vector2(mBackgroundTwo.Position.X - mBackgroundTwo.Size.Width, 0);*/
+
+            objet1.LoadContent(this.Content);
+            objet2.LoadContent(this.Content);
+            objet3.LoadContent(this.Content);
         }
 
         /// <summary>
@@ -99,7 +107,7 @@ namespace ryan
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-           
+
         }
 
         /// <summary>
@@ -110,61 +118,58 @@ namespace ryan
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-           if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
             // TODO: Add your update logic here
             //Code for Keyboard
-           KeyboardState aCurrentKeyboardState = Keyboard.GetState();
-           MouseState aCurrentMouseState = Mouse.GetState();
-           ryan.Update(aCurrentMouseState, aCurrentKeyboardState, gameTime);
-          
+            KeyboardState aCurrentKeyboardState = Keyboard.GetState();
+            MouseState aCurrentMouseState = Mouse.GetState();
+            GamePadState aCurrentGamePad = GamePad.GetState(PlayerIndex.One);
+            ryan.Update(aCurrentMouseState, aCurrentKeyboardState, aCurrentGamePad,gameTime);
 
 
-           
-            
-            Vector2 aDirection = new Vector2(-1, 0);
-            
-            Vector2 aSpeed = new Vector2(60, 0);
 
-            
+
+
+            /*Vector2 aDirection = new Vector2(-1, 0);
+
+            Vector2 aSpeed = new Vector2(100, 0);
+
+
             if (aCurrentKeyboardState.IsKeyDown(Keys.Right) == true && aCurrentKeyboardState.IsKeyDown(Keys.Left) == false)
             {
-                if (mBackgroundOne.Position.X < -mBackgroundOne.Size.Width)
-                    mBackgroundOne.Position.X = mBackgroundThree.Position.X + mBackgroundThree.Size.Width;
                 if (mBackgroundTwo.Position.X < -mBackgroundTwo.Size.Width)
                     mBackgroundTwo.Position.X = mBackgroundOne.Position.X + mBackgroundOne.Size.Width;
                 if (mBackgroundThree.Position.X < -mBackgroundThree.Size.Width)
                     mBackgroundThree.Position.X = mBackgroundTwo.Position.X + mBackgroundTwo.Size.Width;
-                mBackgroundOne.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (mBackgroundOne.Position.X < -mBackgroundOne.Size.Width)
+                    mBackgroundOne.Position.X = mBackgroundThree.Position.X + mBackgroundThree.Size.Width;
                 mBackgroundTwo.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 mBackgroundThree.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                mBackgroundOne.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             if (aCurrentKeyboardState.IsKeyDown(Keys.Left) == true && aCurrentKeyboardState.IsKeyDown(Keys.Right) == false)
             {
-                if (mBackgroundOne.Position.X < 0)
-                {
-                    if (mBackgroundOne.Position.X < -mBackgroundOne.Size.Width)
-                        mBackgroundOne.Position.X = mBackgroundTwo.Position.X - mBackgroundTwo.Size.Width;
-                    if (mBackgroundTwo.Position.X < -mBackgroundTwo.Size.Width)
-                        mBackgroundTwo.Position.X = mBackgroundThree.Position.X - mBackgroundThree.Size.Width;
+                if (mBackgroundTwo.Position.X > (mBackgroundTwo.Size.Width + mBackgroundTwo.Size.Width))
+                    mBackgroundTwo.Position.X = mBackgroundThree.Position.X - mBackgroundTwo.Size.Width;
+                if (mBackgroundThree.Position.X > (mBackgroundTwo.Size.Width + mBackgroundTwo.Size.Width))
+                    mBackgroundThree.Position.X = mBackgroundOne.Position.X - mBackgroundThree.Size.Width;
+                if (mBackgroundOne.Position.X > (mBackgroundTwo.Size.Width + mBackgroundTwo.Size.Width))
+                    mBackgroundOne.Position.X = mBackgroundTwo.Position.X - mBackgroundOne.Size.Width;
 
-                    if (mBackgroundThree.Position.X < -mBackgroundThree.Size.Width)
-                        mBackgroundThree.Position.X = mBackgroundOne.Position.X - mBackgroundOne.Size.Width;
-
-                    mBackgroundOne.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    mBackgroundTwo.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    mBackgroundThree.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-            }
+                mBackgroundTwo.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                mBackgroundThree.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                mBackgroundOne.Position -= aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }*/
 
 
             base.Update(gameTime);
         }
 
-       /* void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-        }*/
+        /* void Window_ClientSizeChanged(object sender, EventArgs e)
+         {
+         }*/
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -173,17 +178,30 @@ namespace ryan
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
             spriteBatch.Begin();
 
 
-            mBackgroundOne.Draw(this.spriteBatch);
-            mBackgroundTwo.Draw(this.spriteBatch);
+           /* mBackgroundTwo.Draw(this.spriteBatch);
             mBackgroundThree.Draw(this.spriteBatch);
+            mBackgroundOne.Draw(this.spriteBatch);*/
             ryan.Draw(this.spriteBatch);
+
+
+
+
+            //Generation aléatoire map
+
+           /* objet1.Draw(this.spriteBatch, 10, 376);
+            objet2.Draw(this.spriteBatch, 200, 376);
+            objet1.Draw(this.spriteBatch, 120, 376);
+            objet2.Draw(this.spriteBatch, 190, 376);
+            objet3.Draw(this.spriteBatch, 3000, 376);
+            objet3.Draw(this.spriteBatch, 240, 376);
+            */
             spriteBatch.End();
 
- 
+
             //spriteBatch.Draw(_alex, _alexBasePos,null, Color.White, MathHelper.ToRadians(_rotation), new Vector2(_alex.Width / 2, _alex.Height / 2), 0.07f, SpriteEffects.None, 0);
 
             // TODO: Add your drawing code here
